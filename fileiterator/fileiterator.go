@@ -43,7 +43,11 @@ var _ iterator.Iterator = &FileIterator{}
 // HasNext returns true/false if the iterator has more values
 // to return
 func (fi *FileIterator) HasNext() bool {
-	return !(fi.line == nil)
+	if fi.line == nil {
+		fi.f.Close()
+		return false
+	}
+	return true
 }
 
 // Next actually returns the value, the value will be string wrapped
